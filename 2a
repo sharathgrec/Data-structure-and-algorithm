@@ -1,48 +1,46 @@
 #include <stdio.h>
 
 int main() {
-    int rows, cols;
+    int N;
 
-    // Prompt the user to enter the order of the matrix
-    printf("Enter the order of the matrix (rows and columns): ");
-    scanf("%d %d", &rows, &cols);
+    // Prompt the user to enter the number of elements
+    printf("Enter the number of elements in the array: ");
+    scanf("%d", &N);
 
-    // Declare a 2D array to store the matrix
-    int matrix[rows][cols];
-    int transpose[cols][rows];
+    // Declare an array to store the elements
+    int arr[N];
 
-    // Prompt the user to enter the elements of the matrix
-    printf("Enter the coefficients of the matrix:\n");
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            scanf("%d", &matrix[i][j]);
-        }
+    // Prompt the user to enter the elements of the array
+    printf("Enter the elements of the array:\n");
+    for (int i = 0; i < N; ++i) {
+        scanf("%d", &arr[i]);
     }
 
-    // Compute the transpose of the matrix
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            transpose[j][i] = matrix[i][j];
-        }
-    }
+    // Initialize the first and second largest elements
+    int firstLargest, secondLargest;
+    if (N >= 2) {
+        firstLargest = secondLargest = arr[0];
 
-    // Print the original matrix
-    printf("The given matrix is:\n");
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            printf("%d ", matrix[i][j]);
+        for (int i = 1; i < N; ++i) {
+            if (arr[i] > firstLargest) {
+                secondLargest = firstLargest;
+                firstLargest = arr[i];
+            } else if (arr[i] > secondLargest && arr[i] != firstLargest) {
+                secondLargest = arr[i];
+            }
         }
-        printf("\n");
-    }
 
-    // Print the transpose of the matrix
-    printf("Transpose of the matrix is:\n");
-    for (int i = 0; i < cols; ++i) {
-        for (int j = 0; j < rows; ++j) {
-            printf("%d ", transpose[i][j]);
+        // If all elements are the same, there won't be a second largest distinct element
+        if (firstLargest == secondLargest) {
+            printf("All elements are the same or there is no distinct second largest element.\n");
+        } else {
+            printf("The FIRST LARGEST = %d\n", firstLargest);
+            printf("The SECOND LARGEST = %d\n", secondLargest);
         }
-        printf("\n");
+    } else {
+        printf("The array should have at least two elements.\n");
     }
 
     return 0;
 }
+
